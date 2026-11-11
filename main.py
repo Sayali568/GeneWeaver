@@ -16,3 +16,22 @@ def validate_dna(sequence):
         raise ValueError("DNA sequence must contain only A, T, C, G.")
 
     return sequence
+
+def reverse_complement(sequence):
+    table = str.maketrans("ATCG", "TAGC")
+    return sequence.translate(table)[::-1]
+
+
+def find_targets(reference, guide):
+    """
+    Find 20-base target sequences followed by
+    an NGG PAM on both DNA strands.
+    """
+    target_length = len(guide)
+    results = []
+
+    strands = [
+        ("+", reference),
+        ("-", reverse_complement(reference))
+    ]
+
