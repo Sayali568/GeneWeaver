@@ -35,7 +35,7 @@ def find_targets(reference, guide):
         ("-", reverse_complement(reference))
     ]
    
-for strand, sequence in strands:
+    for strand, sequence in strands:
         for i in range(len(sequence) - target_length - 2 + 1):
             target = sequence[i:i + target_length]
             pam = sequence[i + target_length:i + target_length + 3]
