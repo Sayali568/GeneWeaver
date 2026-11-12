@@ -34,4 +34,17 @@ def find_targets(reference, guide):
         ("+", reference),
         ("-", reverse_complement(reference))
     ]
+   
+for strand, sequence in strands:
+        for i in range(len(sequence) - target_length - 2 + 1):
+            target = sequence[i:i + target_length]
+            pam = sequence[i + target_length:i + target_length + 3]
 
+            if len(pam) == 3 and pam[1:] == "GG":
+                results.append({
+                    "position": i,
+                    "strand": strand,
+                    "target": target,
+                    "pam": pam
+                })
+                return results
