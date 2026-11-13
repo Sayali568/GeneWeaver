@@ -48,3 +48,16 @@ def find_targets(reference, guide):
                     "pam": pam
                 })
                 return results
+def calculate_mismatches(guide, targets):
+    """
+    Calculate Hamming distance using GPU
+    when available; otherwise use NumPy.
+    """
+    if not targets:
+        return []
+
+    target_array = np.array(
+        [list(item["target"]) for item in targets]
+    )
+
+    guide_array = np.array(list(guide))
