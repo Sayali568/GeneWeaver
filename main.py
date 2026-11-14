@@ -61,3 +61,25 @@ def calculate_mismatches(guide, targets):
     )
 
     guide_array = np.array(list(guide))
+    if GPU_AVAILABLE:
+        target_gpu = cp.asarray(target_array)
+        guide_gpu = cp.asarray(guide_array)
+
+        mismatch = cp.sum(
+            target_gpu != guide_gpu,
+            axis=1
+        )
+
+        mismatch = cp.asnumpy(mismatch)
+
+        mode = "GPU (CuPy)"
+    else:
+        mismatch = np.sum(
+            target_array != guide_array,
+            axis=1
+        )
+
+        mode = "CPU (NumPy)"
+
+    output = []
+
