@@ -82,4 +82,22 @@ def calculate_mismatches(guide, targets):
         mode = "CPU (NumPy)"
 
     output = []
+    for item, count in zip(targets, mismatch):
+        count = int(count)
+
+        output.append({
+            **item,
+            "mismatches": count,
+            "similarity": round(
+                (1 - count / len(guide)) * 100, 2
+            ),
+            "engine": mode
+        })
+
+    return sorted(
+        output,
+        key=lambda x: x["mismatches"]
+    )
+
+
 
