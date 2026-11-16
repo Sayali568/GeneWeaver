@@ -98,6 +98,28 @@ def calculate_mismatches(guide, targets):
         output,
         key=lambda x: x["mismatches"]
     )
+    def run_geneweaver(reference, guide):
+      reference = validate_dna(reference)
+    guide = validate_dna(guide)
+
+    if len(guide) != 20:
+        raise ValueError("Guide RNA must be 20 bases long.")
+
+    print("\n===== GENEWEAVER ENGINE =====")
+
+    targets = find_targets(reference, guide)
+
+    results = calculate_mismatches(
+        guide, targets
+    )
+
+    print("Execution:", 
+          "GPU" if GPU_AVAILABLE else "CPU")
+
+    print("Potential targets found:", len(results))
+
+    print("\nAlignment Results:")
+
 
 
 
