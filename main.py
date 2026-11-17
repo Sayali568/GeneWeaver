@@ -119,6 +119,20 @@ def calculate_mismatches(guide, targets):
     print("Potential targets found:", len(results))
 
     print("\nAlignment Results:")
+    for result in results:
+        print("-" * 45)
+        print("Position:", result["position"])
+        print("Strand:", result["strand"])
+        print("Target:", result["target"])
+        print("PAM:", result["pam"])
+        print("Mismatches:", result["mismatches"])
+        print("Similarity:", result["similarity"], "%")
+
+    if not results:
+        print("No matching PAM sites found.")
+
+    return results
+
 
 
 
