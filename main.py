@@ -132,6 +132,23 @@ def calculate_mismatches(guide, targets):
         print("No matching PAM sites found.")
 
     return results
+if __name__ == "__main__":
+
+    # Demonstration data only
+    reference_dna = (
+        "ATGCTAGCTAGCTACGATCG"
+        "AGG"
+        "TTACGATCGATCGATCGTAA"
+        "TGG"
+    )
+
+    guide_rna = "ATGCTAGCTAGCTACGATCG"
+
+    run_geneweaver(
+        reference_dna,
+        guide_rna
+    )
+
 
 
 
