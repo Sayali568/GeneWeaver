@@ -1,0 +1,20 @@
+# Environments & dependencies
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+
+# Testing & cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local databases
+*.db-journal
+
+# OS files
+.DS_Store
+Thumbs.db
