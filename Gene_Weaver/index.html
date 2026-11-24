@@ -57,3 +57,23 @@
           <p class="text-xs text-slate-400">High-Performance CRISPR-Cas9 Tensor Alignment Engine</p>
         </div>
       </div>
+ <!-- System Telemetry Badge -->
+      <div class="flex items-center space-x-4">
+        <div id="telemetryBadge" class="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60 text-xs">
+          <span id="telemetryDot" class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          <span class="text-slate-300">Engine:</span>
+          <span id="telemetryDevice" class="font-semibold text-brand-400 mono">Detecting...</span>
+        </div>
+        <button onclick="openBenchmarkModal()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-gauge-high text-dna-cyan"></i>
+          <span>Benchmarks</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- GitHub Pages Notice Banner (Only shown in static mode) -->
+  <div id="staticModeBanner" class="hidden bg-gradient-to-r from-cyan-950/60 to-slate-900 border-b border-cyan-800/40 px-4 py-2 text-xs text-slate-300 text-center">
+    <span class="font-bold text-cyan-400"><i class="fa-solid fa-bolt mr-1"></i>Client-Side Static Mode Active:</span>
+    Running in-browser biophysical matching & scoring algorithms. For full multi-core/GPU backend acceleration, run GeneWeaver locally with <code class="mono bg-slate-800 px-1 py-0.5 rounded text-cyan-300">npm run dev</code>.
+  </div>
