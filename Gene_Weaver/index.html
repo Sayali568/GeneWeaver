@@ -107,3 +107,65 @@
             </button>
           </div>
         </div>
+
+        <!-- gRNA Input -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label for="grnaInput" class="text-sm font-medium text-slate-200">20-nt Guide RNA (5' &rarr; 3')</label>
+            <span id="grnaLengthCounter" class="text-xs mono text-slate-400">20/20 nt</span>
+          </div>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="grnaInput" 
+              maxlength="20"
+              placeholder="e.g. GAGTCCGAGCAGAAGAAGAA" 
+              value="GAGTCCGAGCAGAAGAAGAA"
+              class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-base mono tracking-widest text-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-500 uppercase placeholder-slate-600 transition"
+              oninput="handleGrnaInput(this)"
+            />
+            <div id="grnaStatusIcon" class="absolute right-3 top-3.5 text-emerald-400">
+              <i class="fa-solid fa-circle-check"></i>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 mt-1.5">Standard 20-nt protospacer sequence without PAM motif.</p>
+        </div>
+
+        <!-- PAM & Mismatch Setting Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- PAM Motif -->
+          <div>
+            <label for="pamSelect" class="block text-sm font-medium text-slate-200 mb-1.5">PAM Motif (IUPAC)</label>
+            <select id="pamSelect" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <option value="NGG" selected>SpCas9 Canonical (NGG)</option>
+              <option value="NAG">SpCas9 Non-canonical (NAG)</option>
+              <option value="NNGRRT">SaCas9 (NNGRRT)</option>
+            </select>
+          </div>
+
+          <!-- Mismatch Threshold -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label for="mismatchRange" class="text-sm font-medium text-slate-200">Max Mismatches</label>
+              <span id="mismatchValBadge" class="px-2 py-0.5 text-xs font-bold rounded bg-brand-500/20 text-brand-400 mono">3 mm</span>
+            </div>
+            <input 
+              type="range" 
+              id="mismatchRange" 
+              min="0" 
+              max="6" 
+              value="3" 
+              class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-500 mt-2"
+              oninput="document.getElementById('mismatchValBadge').textContent = this.value + ' mm'"
+            />
+            <div class="flex justify-between text-[10px] text-slate-500 px-1 mt-1">
+              <span>0 (Exact)</span>
+              <span>1</span>
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
+              <span>6</span>
+            </div>
+          </div>
+        </div>
