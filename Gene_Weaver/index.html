@@ -169,3 +169,117 @@
             </div>
           </div>
         </div>
+        
+        <!-- Target Genomic Reference -->
+        <div>
+          <div class="flex justify-between items-center mb-1.5">
+            <label for="targetFasta" class="text-sm font-medium text-slate-200">Reference Genome / Sequence (FASTA)</label>
+            <button onclick="loadSampleFasta()" class="text-xs text-brand-400 hover:text-brand-300 flex items-center space-x-1">
+              <i class="fa-solid fa-file-import"></i>
+              <span>Load Chr19 Sample Snippet</span>
+            </button>
+          </div>
+          <textarea 
+            id="targetFasta" 
+            rows="5"
+            placeholder=">chr19_locus&#10;GAGTCCGAGCAGAAGAAGAAGGGCTCGGCCCGGGCGCCCCTC..."
+            class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-xs mono text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 placeholder-slate-700"
+          ></textarea>
+        </div>
+
+        <!-- Hardware & Submit -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center space-x-2 text-xs text-slate-400">
+            <i class="fa-solid fa-microchip text-slate-500"></i>
+            <span>Acceleration:</span>
+            <select id="devicePreference" class="bg-slate-950 border border-slate-700 rounded px-2 py-1 text-slate-200 text-xs">
+              <option value="auto" selected>Auto-detect (CUDA &rarr; CPU)</option>
+              <option value="cuda">Force CUDA GPU</option>
+              <option value="cpu">Vectorized Multi-core CPU</option>
+            </select>
+          </div>
+
+          <button 
+            id="submitBtn" 
+            onclick="submitAlignmentJob()" 
+            class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-500 hover:to-brand-400 text-white font-semibold shadow-lg shadow-brand-500/25 transition transform active:scale-95 flex items-center justify-center space-x-2"
+          >
+            <i class="fa-solid fa-bolt"></i>
+            <span>Execute Alignment</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Execution Status & Pipeline Architecture (Right 5 Cols) -->
+      <div class="lg:col-span-5 space-y-6">
+        
+        <!-- Live Job Status Card -->
+        <div class="bg-slate-900/60 rounded-2xl border border-slate-800/80 p-6 shadow-xl backdrop-blur-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-sm font-semibold text-slate-200 flex items-center space-x-2">
+              <i class="fa-solid fa-circle-nodes text-dna-cyan"></i>
+              <span>Pipeline Status</span>
+            </h3>
+            <span id="jobStatusBadge" class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+              STANDBY
+            </span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs text-slate-400">
+              <span id="jobStepText">Awaiting gRNA query submission...</span>
+              <span id="jobProgressPercent" class="mono font-bold text-slate-300">0%</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-950 rounded-full overflow-hidden border border-slate-800">
+              <div id="jobProgressBar" class="h-full bg-gradient-to-r from-brand-500 to-dna-cyan transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Execution Metrics Grid -->
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+              <div class="text-[11px] text-slate-400">Execution Latency</div>
+              <div id="statLatency" class="text-base font-bold text-white mono mt-0.5">-- ms</div>
+            </div>
+            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+              <div class="text-[11px] text-slate-400">Engine Device</div>
+              <div id="statDevice" class="text-xs font-semibold text-brand-400 truncate mt-1">--</div>
+            </div>
+            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+              <div class="text-[11px] text-slate-400">k-mers Scanned</div>
+              <div id="statKmers" class="text-base font-bold text-white mono mt-0.5">--</div>
+            </div>
+            <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800/80">
+              <div class="text-[11px] text-slate-400">Total Hits Found</div>
+              <div id="statHits" class="text-base font-bold text-dna-rose mono mt-0.5">--</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Algorithmic Reference Card -->
+        <div class="bg-slate-900/60 rounded-2xl border border-slate-800/80 p-5 shadow-xl backdrop-blur-sm space-y-3">
+          <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center space-x-2">
+            <i class="fa-solid fa-book-bookmark text-dna-purple"></i>
+            <span>Algorithmic Architecture</span>
+          </h4>
+          <ul class="text-xs text-slate-300 space-y-2">
+            <li class="flex items-start space-x-2">
+              <i class="fa-solid fa-check text-brand-400 mt-0.5"></i>
+              <span><strong>One-Hot GEMM Matching:</strong> Encodes candidate k-mers into (N, 80) tensors; computes Hamming distances via matrix-vector multiplication.</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <i class="fa-solid fa-check text-brand-400 mt-0.5"></i>
+              <span><strong>MIT Specificity Score:</strong> Multiplicative distance and positional weighting (Hsu et al., 2013).</span>
+            </li>
+            <li class="flex items-start space-x-2">
+              <i class="fa-solid fa-check text-brand-400 mt-0.5"></i>
+              <span><strong>CFD Score:</strong> Cutting Frequency Determination across 16 RNA:DNA nucleotide pairs & PAM affinities (Doench et al., 2016).</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
